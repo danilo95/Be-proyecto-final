@@ -27,4 +27,9 @@ public class CuentaService {
                 })
                 .collect(Collectors.toList());
     }
+
+    public CuentaBancaria obtenerCuentaPorId(Integer idCuenta) {
+        return cuentaRepo.findById(idCuenta)
+                .orElseThrow(() -> new RuntimeException("Cuenta no encontrada"));
+    }
 }
