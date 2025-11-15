@@ -8,6 +8,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
     Optional<Usuario> findByCorreo(String correo);
 
-    // si quisieras permitir correo o dui:
-    // Optional<Usuario> findByCorreoOrDui(String correo, String dui);
+
+
+    Optional<Usuario> findByDui(String dui);
+
 }

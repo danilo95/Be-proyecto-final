@@ -2,6 +2,7 @@ package com.example.proyectofinal.usuario;
 
 import com.example.proyectofinal.auth.JwtService;
 import com.example.proyectofinal.usuario.dto.UsuarioListaDto;
+import com.example.proyectofinal.usuario.dto.UsuarioDetalleDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -47,5 +48,41 @@ public class UsuarioController {
         List<UsuarioListaDto> usuarios = usuarioService.obtenerUsuariosVisibles(incluirAdmins);
 
         return ResponseEntity.ok(usuarios);
+    }
+
+
+    @GetMapping("/por-dui/{dui}")
+    public ResponseEntity<?> obtenerPorDui(
+            @PathVariable String dui,
+            @RequestHeader(value = "Authorization", required = false) String authorizationHeader
+    ) {
+        if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body("Token no proporcionado");
+        }
+
+        String token = authorizationHeader.substring(7);
+        Integer idDelToken = jwtService.getUserIdFromToken(token);
+        String rolDelToken = jwtService.getRolFromToken(token);
+
+
+        if ("Cliente".equals(rolDelToken)) {
+
+            UsuarioDetalleDto detallePropio =
+                    usuarioService.obtenerUsuarioPorDuiConCuentasYPrestamos(dui);
+
+            if (!detallePropio.getIdUsuario().equals(idDelToken)) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                        .body("No puedes consultar datos de otro cliente");
+            }
+
+            return ResponseEntity.ok(detallePropio);
+        }
+
+        // aca esta para que puedan ver otros roles el listado por dui
+        UsuarioDetalleDto detalle =
+                usuarioService.obtenerUsuarioPorDuiConCuentasYPrestamos(dui);
+
+        return ResponseEntity.ok(detalle);
     }
 }
