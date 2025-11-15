@@ -3,6 +3,7 @@ package com.example.proyectofinal.usuario;
 import com.example.proyectofinal.usuario.cuenta.CuentaBancariaRepository;
 import com.example.proyectofinal.usuario.cuenta.dto.CuentaDto;
 import com.example.proyectofinal.usuario.dto.UsuarioDetalleDto;
+import com.example.proyectofinal.usuario.dto.CrearUsuarioRequest;
 import com.example.proyectofinal.usuario.dto.UsuarioListaDto;
 import com.example.proyectofinal.usuario.prestamo.PrestamoRepository;
 import com.example.proyectofinal.usuario.prestamo.dto.PrestamoDto;
@@ -84,5 +85,48 @@ public class UsuarioService {
         detalle.setPrestamos(prestamos);
 
         return detalle;
+    }
+
+    public UsuarioListaDto crearUsuarioConRol(CrearUsuarioRequest request) {
+        if (request.getRol() == null) {
+            throw new RuntimeException("El rol es obligatorio");
+        }
+
+        if (request.getCorreo() == null || request.getCorreo().isBlank()) {
+            throw new RuntimeException("El correo es obligatorio");
+        }
+
+        if (request.getPassword() == null || request.getPassword().isBlank()) {
+            throw new RuntimeException("La contraseña es obligatoria");
+        }
+
+        // Validar que el DUI no se repita
+        usuarioRepository.findByDui(request.getDui()).ifPresent(u -> {
+            throw new RuntimeException("Ya existe un usuario con ese DUI");
+        });
+
+        // Validar que el correo no se repita
+        usuarioRepository.findByCorreo(request.getCorreo()).ifPresent(u -> {
+            throw new RuntimeException("Ya existe un usuario con ese correo");
+        });
+
+        Usuario usuario = new Usuario();
+        usuario.setNombre(request.getNombre());
+        usuario.setDui(request.getDui());
+        usuario.setDireccion(request.getDireccion());
+        usuario.setTelefono(request.getTelefono());
+        usuario.setCorreo(request.getCorreo());
+        usuario.setContrasena(request.getPassword());
+        usuario.setRol(request.getRol());
+        usuario.setSalario(request.getSalario() != null ? request.getSalario() : 0.0);
+
+        Usuario guardado = usuarioRepository.save(usuario);
+
+        UsuarioListaDto dto = new UsuarioListaDto();
+        dto.setIdUsuario(guardado.getIdUsuario());
+        dto.setNombre(guardado.getNombre());
+        dto.setCorreo(guardado.getCorreo());
+        dto.setRol(guardado.getRol());
+        return dto;
     }
 }
