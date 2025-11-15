@@ -1,18 +1,15 @@
 package com.example.proyectofinal.usuario.prestamo.dto;
 
-public class PrestamoDto {
+public class CrearPrestamoRequest {
 
-    private Integer idPrestamo;
+    private Integer idCliente;
     private Double monto;
     private Double interes;
     private Integer plazoAnios;
     private Double cuotaMensual;
-    private String estado;
-    private Integer idCliente;
-    private Integer idCajero;
 
-    public Integer getIdPrestamo() { return idPrestamo; }
-    public void setIdPrestamo(Integer idPrestamo) { this.idPrestamo = idPrestamo; }
+    public Integer getIdCliente() { return idCliente; }
+    public void setIdCliente(Integer idCliente) { this.idCliente = idCliente; }
 
     public Double getMonto() { return monto; }
     public void setMonto(Double monto) { this.monto = monto; }
@@ -25,13 +22,4 @@ public class PrestamoDto {
 
     public Double getCuotaMensual() { return cuotaMensual; }
     public void setCuotaMensual(Double cuotaMensual) { this.cuotaMensual = cuotaMensual; }
-
-    public String getEstado() { return estado; }
-    public void setEstado(String estado) { this.estado = estado; }
-
-    public Integer getIdCliente() { return idCliente; }
-    public void setIdCliente(Integer idCliente) { this.idCliente = idCliente; }
-
-    public Integer getIdCajero() { return idCajero; }
-    public void setIdCajero(Integer idCajero) { this.idCajero = idCajero; }
 }
