@@ -39,9 +39,6 @@ public class UsuarioService {
                     dto.setNombre(u.getNombre());
                     dto.setCorreo(u.getCorreo());
                     dto.setRol(u.getRol());
-                    dto.setDui(u.getDui());
-                    dto.setTelefono(u.getTelefono());
-
                     return dto;
                 })
                 .collect(Collectors.toList());
@@ -130,7 +127,6 @@ public class UsuarioService {
         dto.setNombre(guardado.getNombre());
         dto.setCorreo(guardado.getCorreo());
         dto.setRol(guardado.getRol());
-
         return dto;
     }
 }

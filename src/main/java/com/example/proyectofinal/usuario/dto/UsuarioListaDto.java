@@ -9,25 +9,35 @@ public class UsuarioListaDto {
     private String correo;
     private Rol rol;
 
-    // NUEVOS CAMPOS
-    private String dui;
-    private String telefono;
+    public Integer getIdUsuario() {
+        return idUsuario;
+    }
 
-    public Integer getIdUsuario() { return idUsuario; }
-    public void setIdUsuario(Integer idUsuario) { this.idUsuario = idUsuario; }
+    public void setIdUsuario(Integer idUsuario) {
+        this.idUsuario = idUsuario;
+    }
 
-    public String getNombre() { return nombre; }
-    public void setNombre(String nombre) { this.nombre = nombre; }
+    public String getNombre() {
+        return nombre;
+    }
 
-    public String getCorreo() { return correo; }
-    public void setCorreo(String correo) { this.correo = correo; }
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
-    public Rol getRol() { return rol; }
-    public void setRol(Rol rol) { this.rol = rol; }
+    public String getCorreo() {
+        return correo;
+    }
 
-    public String getDui() { return dui; }
-    public void setDui(String dui) { this.dui = dui; }
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
 
-    public String getTelefono() { return telefono; }
-    public void setTelefono(String telefono) { this.telefono = telefono; }
+    public Rol getRol() {
+        return rol;
+    }
+
+    public void setRol(Rol rol) {
+        this.rol = rol;
+    }
 }
