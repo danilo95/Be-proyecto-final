@@ -21,6 +21,7 @@ import jakarta.persistence.*;
 
         private String correo;
 
+
         @Column(name = "contraseña")
         private String contrasena;
 
